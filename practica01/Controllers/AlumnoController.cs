@@ -18,7 +18,7 @@ namespace practica01.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-
+        //metodo para consultar todo una tabla
         public IActionResult Get()
         {
             List<Alumno> listadoAlumno = (from e in _alumnoContext.Alumno select e).ToList();
@@ -31,7 +31,7 @@ namespace practica01.Controllers
         //url = localhost/api/equipos/getbyid?id=23&nombre=pwa
         [HttpGet]
         [Route("getbyid/{id}")]
-        
+        //metodo para consultar con id
         public IActionResult Get(int id) {
             Alumno? alumno = (from e in _alumnoContext.Alumno where e.cod == id select e).FirstOrDefault();
             if (alumno == null) return NotFound();
@@ -41,13 +41,15 @@ namespace practica01.Controllers
         [HttpGet]
         [Route("find")]
 
+        //metodo para consultar con filtros 
         public IActionResult Buscar(String filtro)
         {
             //El contexto va a la base de datos
 
-            List<Alumno> alumno = (from e in _alumnoContext.Alumno where e.nombre == filtro select e).ToList();
+            //List<Alumno> alumno = (from e in _alumnoContext.Alumno where e.nombre == filtro select e).ToList();
             //uso del Like
-            //List<Alumno> alumno = (from e in _alumnoContext.Alumno where e.nombre.Contains(filtro) select e).ToList();
+
+            List<Alumno> alumno = (from e in _alumnoContext.Alumno where e.nombre.Contains(filtro) select e).ToList();
 
             //uso del or
             //List<Alumno> alumno = (from e in _alumnoContext.Alumno where e.nombre.Contains(filtro) || e.apellido.Contains(filtro) select e).ToList();
@@ -66,6 +68,7 @@ namespace practica01.Controllers
         [Route("add")]
 
         //filosofia de sully
+        //metodo para ingresar en la base de datos
         public IActionResult crear([FromBody] Alumno pAlumno)
         {
             try
@@ -83,7 +86,7 @@ namespace practica01.Controllers
             }
         }
 
-        //Para modificar
+        //metodo para modificar
         [HttpPut]
         [Route("Actulizar/{id}")]
         public IActionResult actulizarAlumno(int id, [FromBody] Alumno pAlumno)
@@ -104,6 +107,7 @@ namespace practica01.Controllers
         }
 
         // no se recomienda borrar sino que se recomienda cambiar el estado
+        //metodo para eliminar en la base de datos
         [HttpDelete]
         [Route("Eliminar")]
         public IActionResult eliminar(int id)
